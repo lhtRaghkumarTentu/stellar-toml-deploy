@@ -1,11 +1,11 @@
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 4000;
 const path = require('path');
 const cors = require('cors');
 
 app.get("/",(req,res)=>{
-    res.send("Hello EveyOne!!!")
+    res.send("Hello is This Working!!!!!!!!!!!!")
 });
 
 app.use(cors({
@@ -18,7 +18,7 @@ app.get('/.wellknown/stellar.toml', (req, res, next) => {
     }
     res.header("Access-Control-Allow-Origin", "*");
     res.header("content-type", "text/plain");
-    res.sendFile('stellar.txt', options);
+    res.sendFile('stellar.toml', options);
   })
 
 app.listen(port,()=>{
