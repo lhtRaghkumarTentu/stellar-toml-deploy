@@ -16,6 +16,13 @@ status = "test"
 is_asset_anchored = false
 desc = "Stellar Reference Token (SRT) is an asset issued on testnet and is used as an anchored asset for this reference server for demonstration and testing purposes."
 
+[[CURRENCIES]]
+code = "ZeptaCoin"
+issuer = "GD3V4AJMAKA3D2TPSFQZQX2LM43WYNKFCEUQITWMYO3PL4V4CBLTGZFG"
+status = "test"
+is_asset_anchored = false
+desc = "ZeptaCoin is an asset issued on testnet and is used as an anchored asset for this reference server for demonstration and testing purposes."
+
 [DOCUMENTATION]
 ORG_NAME = "Stellar Development Foundation"
 ORG_URL = "https://stellar.org"
