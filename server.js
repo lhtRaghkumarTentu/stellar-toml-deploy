@@ -20,6 +20,30 @@ app.get('/.well-known/stellar.toml', (req, res, next) => {
     res.sendFile('stellar.toml', options);
   })
 
+  app.get('/sep24/info',(req,res)=>{
+    res.json({
+      "deposit": {
+          "AstroDollar": {
+              "enabled": true,
+              "fee_fixed": 1.0
+          }
+      },
+      "withdraw": {
+          "AstroDollar": {
+              "enabled": true,
+              "fee_fixed": 1.0
+          }
+      },
+      "fee": {
+          "enabled": true
+      },
+      "features": {
+          "account_creation": true,
+          "claimable_balances": true
+      }
+    })
+  })
+
 app.listen(port,()=>{
     console.log(`App is Running Locally on Port http://localhost:${port}`)
 })
