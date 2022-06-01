@@ -3,7 +3,7 @@ SIGNING_KEY = "GBRZDRPULVPWPZFVRJYK4OMKY22QHZOD5KEUEGUALM2KADZ3U54QK6G6"
 NETWORK_PASSPHRASE = "Test SDF Network ; September 2022"
 
 TRANSFER_SERVER = "https://stellartomlorg.herokuapp.com/sep6"
-TRANSFER_SERVER_SEP0024 = "https://stellartomlorg.herokuapp.com/sep24/info"
+TRANSFER_SERVER_SEP0024 = "https://stellartomlorg.herokuapp.com/sep24"
 WEB_AUTH_ENDPOINT = "https://stellartomlorg.herokuapp.com/auth"
 KYC_SERVER = "https://stellartomlorg.herokuapp.com/kyc"
 DIRECT_PAYMENT_SERVER = "https://stellartomlorg.herokuapp.com/sep31"
