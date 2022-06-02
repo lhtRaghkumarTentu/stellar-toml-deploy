@@ -143,7 +143,7 @@ app.get('/sep6/info',(req,res)=>{
     })
     })
 
-app.get('auth',(req, res) => {
+app.get('/auth',(req, res) => {
     // Public key of the client requesting access.
     const clientPublicKey = req.query.public_key;
    
