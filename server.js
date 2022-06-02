@@ -47,23 +47,84 @@ res.json({
 app.get('/sep6/info',(req,res)=>{
     res.json({
         "deposit": {
-            "AstroDollar": {
+            "AustroDollar": {
                 "enabled": true,
-                "fee_fixed": 1.0
+                "authentication_required": true,
+                "fields": {
+                    "type": {
+                        "description": "'bank_account' is the only value supported'",
+                        "choices": [
+                            "bank_account"
+                        ]
+                    }
+                }
             }
         },
         "withdraw": {
-            "AstroDollar": {
+            "AustroDollar": {
                 "enabled": true,
-                "fee_fixed": 1.0
+                "authentication_required": true,
+                "types": {
+                    "bank_account": {
+                        "fields": {
+                            "dest": {
+                                "description": "bank account number"
+                            },
+                            "dest_extra": {
+                                "description": "bank routing number"
+                            }
+                        }
+                    }
+                }
             }
         },
         "fee": {
-            "enabled": true
+            "enabled": true,
+            "authentication_required": true
+        },
+        "transactions": {
+            "enabled": true,
+            "authentication_required": true
+        },
+        "transaction": {
+            "enabled": true,
+            "authentication_required": true
         },
         "features": {
             "account_creation": true,
             "claimable_balances": true
+        },
+        "deposit-exchange": {
+            "SRT": {
+                "enabled": true,
+                "authentication_required": true,
+                "fields": {
+                    "type": {
+                        "description": "'bank_account' is the only value supported'",
+                        "choices": [
+                            "bank_account"
+                        ]
+                    }
+                }
+            }
+        },
+        "withdraw-exchange": {
+            "AustroDollar": {
+                "enabled": true,
+                "authentication_required": true,
+                "types": {
+                    "bank_account": {
+                        "fields": {
+                            "dest": {
+                                "description": "bank account number"
+                            },
+                            "dest_extra": {
+                                "description": "bank routing number"
+                            }
+                        }
+                    }
+                }
+            }
         }
     })
     })
