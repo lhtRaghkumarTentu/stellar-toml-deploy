@@ -95,7 +95,7 @@ app.get('/sep6/info',(req,res)=>{
             "claimable_balances": true
         },
         "deposit-exchange": {
-            "SRT": {
+            "AustroDollar": {
                 "enabled": true,
                 "authentication_required": true,
                 "fields": {
