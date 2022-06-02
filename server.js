@@ -47,7 +47,7 @@ res.json({
 app.get('/sep6/info',(req,res)=>{
     res.json({
         "deposit": {
-            "AustroDollar": {
+            "AstroDollar": {
                 "enabled": true,
                 "authentication_required": true,
                 "fields": {
@@ -61,7 +61,7 @@ app.get('/sep6/info',(req,res)=>{
             }
         },
         "withdraw": {
-            "AustroDollar": {
+            "AstroDollar": {
                 "enabled": true,
                 "authentication_required": true,
                 "types": {
@@ -95,7 +95,7 @@ app.get('/sep6/info',(req,res)=>{
             "claimable_balances": true
         },
         "deposit-exchange": {
-            "AustroDollar": {
+            "AstroDollar": {
                 "enabled": true,
                 "authentication_required": true,
                 "fields": {
@@ -109,7 +109,7 @@ app.get('/sep6/info',(req,res)=>{
             }
         },
         "withdraw-exchange": {
-            "AustroDollar": {
+            "AstroDollar": {
                 "enabled": true,
                 "authentication_required": true,
                 "types": {
