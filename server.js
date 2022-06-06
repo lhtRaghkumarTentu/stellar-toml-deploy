@@ -127,8 +127,9 @@ app.get('/sep6/info',(req,res)=>{
             }
         }
     })
-    })
+})
 
 app.listen(port,()=>{
     console.log(`App is Running Locally on Port http://localhost:${port}`)
 })
+

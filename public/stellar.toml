@@ -4,8 +4,8 @@ NETWORK_PASSPHRASE = "Test SDF Network ; September 2022"
 
 TRANSFER_SERVER = "https://stellartomlorg.herokuapp.com/sep6"
 TRANSFER_SERVER_SEP0024 = "https://stellartomlorg.herokuapp.com/sep24"
-WEB_AUTH_ENDPOINT = "https://stellartomlorg.herokuapp.com/auth"
-KYC_SERVER = "https://stellartomlorg.herokuapp.com/kyc"
+WEB_AUTH_ENDPOINT = "https://testanchor.stellar.org/auth"
+KYC_SERVER = "https://testanchor.stellar.org/kyc"
 DIRECT_PAYMENT_SERVER = "https://stellartomlorg.herokuapp.com/sep31"
 QUOTE_SERVER = "https://stellartomlorg.herokuapp.com/sep38"
 

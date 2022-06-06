@@ -5,15 +5,17 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@satoshipay/stellar-sep-10": "^0.3.0",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "express": "^4.18.1",
+    "nodemon": "^2.0.16",
     "stellar-sdk": "^10.1.1"
   }
 }
