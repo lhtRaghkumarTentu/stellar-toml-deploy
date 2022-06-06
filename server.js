@@ -3,12 +3,24 @@ const app = express();
 const port = process.env.PORT || 4000;
 const path = require('path');
 const cors = require('cors');
+const crypto = require('crypto');
+const stellar = require('stellar-sdk');
 
 app.get("/",(req,res)=>{
     res.send("Hello is This Working!!!!!!!!!!!!")
 });
 
 app.use(cors());
+
+const SERVER_KEY_PAIR = stellar.Keypair.fromSecret("SA6JUAPMIEOXKFE7VSNTOGB4TFDXRMVCBE6DWZNTW7JWKLMMRJY2ZZMC");
+const CHALLENGE_EXPIRE_IN = 300
+const INVALID_SEQUENCE = "0"
+
+const randomNonce = () => {
+    return crypto.randomBytes(32).toString("hex");
+};
+
+const account = new stellar.Account(SERVER_KEY_PAIR.publicKey(), INVALID_SEQUENCE);
 
 app.get('/.well-known/stellar.toml', (req, res, next) => {
     const options = {
@@ -127,6 +139,28 @@ app.get('/sep6/info',(req,res)=>{
             }
         }
     })
+})
+
+app.get('/auth',(req, res) => {
+    const clientPublicKey = req.params.account;
+    const minTime = Date.now();
+    const maxTime = minTime + CHALLENGE_EXPIRE_IN;
+    const timebounds = {
+      minTime: minTime.toString(),
+      maxTime: maxTime.toString()
+    };
+    const op = stellar.Operation.manageData({
+        source: clientPublicKey,
+        name: "Sample auth",
+        value: randomNonce()
+      });
+    console.log(account);
+    const tx = new stellar.TransactionBuilder(account, { timebounds, fee:100}).addOperation(op).setNetworkPassphrase("Test SDF Network ; September 2022").build()
+    console.log(tx)
+    tx.sign(SERVER_KEY_PAIR);
+    res.json({ transaction: tx.toEnvelope().toXDR("base64"),network_passpharse: "Test SDF Network ; September 2022"});
+    console.log(tx);
+    console.info(`${clientPublicKey} requested challenge => OK`);
 })
 
 app.listen(port,()=>{
