@@ -17,7 +17,7 @@ app.use(cors());
 const SERVER_KEY_PAIR = stellar.Keypair.fromSecret("SA6JUAPMIEOXKFE7VSNTOGB4TFDXRMVCBE6DWZNTW7JWKLMMRJY2ZZMC");
 const JWT_TOKEN_LIFETIME = 300
 const INVALID_SEQUENCE = "0"
-CHALLENGE_EXPIRE_IN = 300
+const CHALLENGE_EXPIRE_IN = 800
 const ALLOWED_ACCOUNTS = ["GBRZDRPULVPWPZFVRJYK4OMKY22QHZOD5KEUEGUALM2KADZ3U54QK6G6", "GARMGTBWPPAFGIM5OAN5ZIMFDMLEZ2S7VJUTXT5W6YEQIY56Q4XSE7MG"]
 const randomNonce = () => {
     return crypto.randomBytes(32).toString("hex");
@@ -159,11 +159,12 @@ app.get('/auth',(req, res) => {
         value: randomNonce()
       });
     console.log(account);
-    const tx = new stellar.TransactionBuilder(account, { timebounds, fee:100}).addOperation(op).setNetworkPassphrase("Test SDF Network ; September 2022").build()
+    const tx = new stellar.TransactionBuilder(account, { timebounds, fee:100}).addOperation(op).setNetworkPassphrase("Test SDF Network ; September 2015").build()
     console.log(tx)
     tx.sign(SERVER_KEY_PAIR);
-    res.json({ transaction: tx.toEnvelope().toXDR("base64"),network_passpharse: "Test SDF Network ; September 2022"});
+    res.json({ transaction: tx.toEnvelope().toXDR("base64"), network_passpharse: "Test SDF Network ; September 2015"});
     console.log(tx);
+
     console.info(`${clientPublicKey} requested challenge => OK`);
 })
 
