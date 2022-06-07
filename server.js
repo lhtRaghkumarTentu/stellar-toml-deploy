@@ -14,6 +14,7 @@ app.get("/",(req,res)=>{
 
 app.use(cors());
 
+
 const SERVER_KEY_PAIR = stellar.Keypair.fromSecret("SA6JUAPMIEOXKFE7VSNTOGB4TFDXRMVCBE6DWZNTW7JWKLMMRJY2ZZMC");
 const INVALID_SEQUENCE = "0"
 const CHALLENGE_EXPIRE_IN = 800
@@ -21,7 +22,9 @@ const randomNonce = () => {
     return crypto.randomBytes(32).toString("hex");
 };
 
+
 const account = new stellar.Account(SERVER_KEY_PAIR.publicKey(), INVALID_SEQUENCE);
+
 
 //SEP01
 app.get('/.well-known/stellar.toml', (req, res, next) => {
@@ -33,6 +36,7 @@ app.get('/.well-known/stellar.toml', (req, res, next) => {
     res.header("content-type", "text/plain");
     res.sendFile('stellar.toml', options);
 })
+
 
 //SEP24
 app.get('/sep24/info',(req,res)=>{
@@ -58,6 +62,7 @@ res.json({
     }
 })
 })
+
 
 //SEP06
 app.get('/sep6/info',(req,res)=>{
@@ -145,6 +150,7 @@ app.get('/sep6/info',(req,res)=>{
     })
 })
 
+
 //SEP10
 app.get('/auth',(req, res) => {
     const clientPublicKey = req.query.account;
@@ -162,10 +168,9 @@ app.get('/auth',(req, res) => {
     const tx = new stellar.TransactionBuilder(account, { timebounds, fee:100}).addOperation(op).setNetworkPassphrase("Test SDF Network ; September 2015").build()
     console.log(tx)
     tx.sign(SERVER_KEY_PAIR);
-    res.json({ transaction: tx.toEnvelope().toXDR("base64"), network_passpharse: "Test SDF Network ; September 2015", Client_Domain:"stellartomlorg.herokuapp.com"});
+    res.json({ transaction: tx.toEnvelope().toXDR("base64"), network_passpharse: "Test SDF Network ; September 2015"});
     console.info(`${clientPublicKey} requested challenge => OK`);
 })
-
 
 
 app.listen(port,()=>{
