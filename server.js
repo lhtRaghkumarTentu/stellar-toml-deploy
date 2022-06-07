@@ -17,7 +17,7 @@ app.use(cors());
 
 const SERVER_KEY_PAIR = stellar.Keypair.fromSecret("SA6JUAPMIEOXKFE7VSNTOGB4TFDXRMVCBE6DWZNTW7JWKLMMRJY2ZZMC");
 const INVALID_SEQUENCE = "0"
-const CHALLENGE_EXPIRE_IN = 800
+const CHALLENGE_EXPIRE_IN = 900
 const randomNonce = () => {
     return crypto.randomBytes(32).toString("hex");
 };
@@ -162,7 +162,7 @@ app.get('/auth',(req, res) => {
     };
     const op = stellar.Operation.manageData({
         source: clientPublicKey,
-        name: "challengeTx",
+        key: 'stellartomlorg.herokuapp.com auth',
         value: randomNonce()
       });
     const tx = new stellar.TransactionBuilder(account, { timebounds, fee:100}).addOperation(op).setNetworkPassphrase("Test SDF Network ; September 2015").build()
