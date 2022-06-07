@@ -15,17 +15,15 @@ app.get("/",(req,res)=>{
 app.use(cors());
 
 const SERVER_KEY_PAIR = stellar.Keypair.fromSecret("SA6JUAPMIEOXKFE7VSNTOGB4TFDXRMVCBE6DWZNTW7JWKLMMRJY2ZZMC");
-const JWT_TOKEN_LIFETIME = 300
 const INVALID_SEQUENCE = "0"
 const CHALLENGE_EXPIRE_IN = 800
-const ALLOWED_ACCOUNTS = ["GBRZDRPULVPWPZFVRJYK4OMKY22QHZOD5KEUEGUALM2KADZ3U54QK6G6", "GARMGTBWPPAFGIM5OAN5ZIMFDMLEZ2S7VJUTXT5W6YEQIY56Q4XSE7MG"]
 const randomNonce = () => {
     return crypto.randomBytes(32).toString("hex");
 };
-const JWT_SECRET = randomNonce();
-// console.log(randomNonce());
+
 const account = new stellar.Account(SERVER_KEY_PAIR.publicKey(), INVALID_SEQUENCE);
 
+//SEP01
 app.get('/.well-known/stellar.toml', (req, res, next) => {
     const options = {
       root: path.join(__dirname, 'public'),
@@ -36,6 +34,7 @@ app.get('/.well-known/stellar.toml', (req, res, next) => {
     res.sendFile('stellar.toml', options);
 })
 
+//SEP24
 app.get('/sep24/info',(req,res)=>{
 res.json({
     "deposit": {
@@ -60,6 +59,7 @@ res.json({
 })
 })
 
+//SEP06
 app.get('/sep6/info',(req,res)=>{
     res.json({
         "deposit": {
@@ -145,6 +145,7 @@ app.get('/sep6/info',(req,res)=>{
     })
 })
 
+//SEP10
 app.get('/auth',(req, res) => {
     const clientPublicKey = req.query.account;
     const minTime = Date.now();
@@ -155,19 +156,15 @@ app.get('/auth',(req, res) => {
     };
     const op = stellar.Operation.manageData({
         source: clientPublicKey,
-        name: "Sample auth",
+        name: "challengeTx",
         value: randomNonce()
       });
-    console.log(account);
     const tx = new stellar.TransactionBuilder(account, { timebounds, fee:100}).addOperation(op).setNetworkPassphrase("Test SDF Network ; September 2015").build()
     console.log(tx)
     tx.sign(SERVER_KEY_PAIR);
     res.json({ transaction: tx.toEnvelope().toXDR("base64"), network_passpharse: "Test SDF Network ; September 2015"});
-    console.log(tx);
-
     console.info(`${clientPublicKey} requested challenge => OK`);
 })
-
 
 app.listen(port,()=>{
     console.log(`App is Running Locally on Port http://localhost:${port}`)
