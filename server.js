@@ -159,12 +159,14 @@ app.get('/auth',(req, res) => {
         name: "challengeTx",
         value: randomNonce()
       });
-    const tx = new stellar.TransactionBuilder(account, { timebounds, fee:100}).addOperation(op).setNetworkPassphrase("Test SDF Network ; September 2015").build()
+    const tx = new stellar.TransactionBuilder(account, { timebounds, fee:100, Client_Domain:"stellartomlorg.herokuapp.com"}).addOperation(op).setNetworkPassphrase("Test SDF Network ; September 2015").build()
     console.log(tx)
     tx.sign(SERVER_KEY_PAIR);
     res.json({ transaction: tx.toEnvelope().toXDR("base64"), network_passpharse: "Test SDF Network ; September 2015"});
     console.info(`${clientPublicKey} requested challenge => OK`);
 })
+
+
 
 app.listen(port,()=>{
     console.log(`App is Running Locally on Port http://localhost:${port}`)
