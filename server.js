@@ -162,7 +162,7 @@ app.get('/auth',(req, res) => {
     };
     const op = stellar.Operation.manageData({
         source: clientPublicKey,
-        key: 'stellartomlorg.herokuapp.com auth',
+        name: "challengeTx",
         value: randomNonce()
       });
     const tx = new stellar.TransactionBuilder(account, { timebounds, fee:100}).addOperation(op).setNetworkPassphrase("Test SDF Network ; September 2015").build()
