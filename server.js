@@ -165,7 +165,7 @@ app.get('/auth',(req, res) => {
     const tx = new stellar.TransactionBuilder(account, { timebounds, fee:100}).addOperation(op).setNetworkPassphrase("Test SDF Network ; September 2015").build()
     // console.log(tx)
     tx.sign(SERVER_KEY_PAIR);
-    return ({ transaction: tx.toEnvelope().toXDR("base64"), network_passpharse: "Test SDF Network ; September 2015"});
+    res.json ({ transaction: tx.toEnvelope().toXDR("base64"), network_passpharse: "Test SDF Network ; September 2015"});
     // console.info(`${clientPublicKey} requested challenge => OK`);
 })
 
