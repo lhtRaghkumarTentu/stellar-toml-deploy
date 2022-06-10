@@ -5,8 +5,8 @@ const path = require('path');
 const cors = require('cors');
 const crypto = require('crypto');
 const stellar = require('stellar-sdk');
-const jwt = require("jsonwebtoken");
-const { Transaction } = require('stellar-sdk');
+// const jwt = require("jsonwebtoken");
+// const { Transaction } = require('stellar-sdk');
 
 app.get("/",(req,res)=>{
     res.send("Hello is This Working!!!!!!!!!!!!")
@@ -37,7 +37,6 @@ app.get('/.well-known/stellar.toml', (req, res, next) => {
     res.sendFile('stellar.toml', options);
 })
 
-
 //SEP24
 app.get('/sep24/info',(req,res)=>{
 res.json({
@@ -62,7 +61,6 @@ res.json({
     }
 })
 })
-
 
 //SEP06
 app.get('/sep6/info',(req,res)=>{
@@ -150,7 +148,6 @@ app.get('/sep6/info',(req,res)=>{
     })
 })
 
-
 //SEP10
 app.get('/auth',(req, res) => {
     const clientPublicKey = req.query.account;
@@ -166,14 +163,14 @@ app.get('/auth',(req, res) => {
         value: randomNonce()
       });
     const tx = new stellar.TransactionBuilder(account, { timebounds, fee:100}).addOperation(op).setNetworkPassphrase("Test SDF Network ; September 2015").build()
-    console.log(tx)
+    // console.log(tx)
     tx.sign(SERVER_KEY_PAIR);
-    res.json({ transaction: tx.toEnvelope().toXDR("base64"), network_passpharse: "Test SDF Network ; September 2015"});
-    console.info(`${clientPublicKey} requested challenge => OK`);
+    return ({ transaction: tx.toEnvelope().toXDR("base64"), network_passpharse: "Test SDF Network ; September 2015"});
+    // console.info(`${clientPublicKey} requested challenge => OK`);
 })
+
 
 
 app.listen(port,()=>{
     console.log(`App is Running Locally on Port http://localhost:${port}`)
-})
-
+})                                   
