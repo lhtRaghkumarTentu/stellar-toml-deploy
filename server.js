@@ -163,10 +163,17 @@ app.get('/auth',(req, res) => {
         value: randomNonce()
       });
     const tx = new stellar.TransactionBuilder(account, { timebounds, fee:100}).addOperation(op).setNetworkPassphrase("Test SDF Network ; September 2015").build()
-    // console.log(tx)
+    console.log(tx)
     tx.sign(SERVER_KEY_PAIR);
     res.json ({ transaction: tx.toEnvelope().toXDR("base64"), network_passpharse: "Test SDF Network ; September 2015"});
-    // console.info(`${clientPublicKey} requested challenge => OK`);
+    console.info(`${clientPublicKey} requested challenge => OK`);
+})
+
+
+app.post('/sign',(req,res)=>{
+    challenge = req.query.challenge;3
+    const Transaction = Utils.readChallengeTx( challenge, SERVER_KEY_PAIR.publicKey(), stellar.Networks.TESTNET, "SDF","stellartomlorg.herokuapp.com" )
+    res.json ({ challenge, network_passpharse: stellar.Networks.TESTNET });
 })
 
 
