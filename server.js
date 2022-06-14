@@ -44,10 +44,18 @@ res.json({
         "AstroDollar": {
             "enabled": true,
             "fee_fixed": 1.0
+        },
+        "COINR": {
+            "enabled": true,
+            "fee_fixed": 1.0
         }
     },
     "withdraw": {
         "AstroDollar": {
+            "enabled": true,
+            "fee_fixed": 1.0
+        },
+        "COINR": {
             "enabled": true,
             "fee_fixed": 1.0
         }
@@ -77,10 +85,38 @@ app.get('/sep6/info',(req,res)=>{
                         ]
                     }
                 }
+            },
+            "COINR": {
+                "enabled": true,
+                "authentication_required": true,
+                "fields": {
+                    "type": {
+                        "description": "'bank_account' is the only value supported'",
+                        "choices": [
+                            "bank_account"
+                        ]
+                    }
+                }
             }
         },
         "withdraw": {
             "AstroDollar": {
+                "enabled": true,
+                "authentication_required": true,
+                "types": {
+                    "bank_account": {
+                        "fields": {
+                            "dest": {
+                                "description": "bank account number"
+                            },
+                            "dest_extra": {
+                                "description": "bank routing number"
+                            }
+                        }
+                    }
+                }
+            },
+            "COINR": {
                 "enabled": true,
                 "authentication_required": true,
                 "types": {
@@ -125,10 +161,38 @@ app.get('/sep6/info',(req,res)=>{
                         ]
                     }
                 }
+            },
+            "COINR": {
+                "enabled": true,
+                "authentication_required": true,
+                "fields": {
+                    "type": {
+                        "description": "'bank_account' is the only value supported'",
+                        "choices": [
+                            "bank_account"
+                        ]
+                    }
+                }
             }
         },
         "withdraw-exchange": {
             "AstroDollar": {
+                "enabled": true,
+                "authentication_required": true,
+                "types": {
+                    "bank_account": {
+                        "fields": {
+                            "dest": {
+                                "description": "bank account number"
+                            },
+                            "dest_extra": {
+                                "description": "bank routing number"
+                            }
+                        }
+                    }
+                }
+            },
+            "COINR": {
                 "enabled": true,
                 "authentication_required": true,
                 "types": {
