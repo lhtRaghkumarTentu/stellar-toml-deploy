@@ -171,9 +171,13 @@ app.get('/auth',(req, res) => {
     // console.info(`${clientPublicKey} requested challenge => OK`);
     const clientPublicKey = req.query.account;
     const challenge = stellar.Utils.buildChallengeTx( SERVER_KEY_PAIR, clientPublicKey, "SDF", 300, stellar.Networks.TESTNET, "stellartomlorg.herokuapp.com");
-    const readChallengeTx = stellar.Utils.readChallengeTx(challenge, SERVER_KEY_PAIR.publicKey(), stellar.Networks.TESTNET, "SDF","stellartomlorg.herokuapp.com")
-    console.log(readChallengeTx);
     res.json ({ transaction: challenge, network_passpharse: stellar.Networks.TESTNET });
+})
+
+app.post('/sign',(req,res)=>{
+    const challenge = req.query.challenge;
+    const readChallengeTx = stellar.Utils.readChallengeTx(challenge, SERVER_KEY_PAIR.publicKey(), stellar.Networks.TESTNET, "SDF","stellartomlorg.herokuapp.com")
+    res.json({signedTransaction: readChallengeTx});
 })
 
 
