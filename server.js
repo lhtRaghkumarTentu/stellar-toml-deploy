@@ -214,36 +214,31 @@ app.get('/sep6/info',(req,res)=>{
 
 //SEP10
 app.get('/auth',(req, res) => {
-    const clientPublicKey = req.query.account;
-    const minTime = Date.now();
-    const maxTime = minTime + CHALLENGE_EXPIRE_IN;
-    const timebounds = {
-      minTime: minTime.toString(),
-      maxTime: maxTime.toString()
-    };
-    const op = stellar.Operation.manageData({
-        source: clientPublicKey,
-        name: "challengeTx",
-        value: randomNonce()
-      });
-    const tx = new stellar.TransactionBuilder(account, { timebounds, fee:100}).addOperation(op).setNetworkPassphrase(stellar.Networks.TESTNET).build()
-    console.log(tx)
+    // const clientPublicKey = req.query.account;
+    // const minTime = Date.now();
+    // const maxTime = minTime + CHALLENGE_EXPIRE_IN;
+    // const timebounds = {
+    //   minTime: minTime.toString(),
+    //   maxTime: maxTime.toString()
+    // };
+    // const op = stellar.Operation.manageData({
+    //     source: clientPublicKey,
+    //     name: "challengeTx",
+    //     value: randomNonce()
+    //   });
+    // const tx = new stellar.TransactionBuilder(account, { timebounds, fee:100}).addOperation(op).setNetworkPassphrase(stellar.Networks.TESTNET).build()
+    // console.log(tx)
     // readChallengeTx = stellar.Utils.readChallengeTx(tx.toEnvelope().toXDR("base64"), SERVER_KEY_PAIR.publicKey(), stellar.Networks.TESTNET, "SDF","stellartomlorg.herokuapp.com")
     // console.log(readChallengeTx);
-    tx.sign(SERVER_KEY_PAIR);
-    res.json ({ transaction: tx.toEnvelope().toXDR("base64"), network_passpharse: "Test SDF Network ; September 2015"});
-    console.info(`${clientPublicKey} requested challenge => OK`);
-    // const clientPublicKey = req.query.account;
-    // const challenge = stellar.Utils.buildChallengeTx( SERVER_KEY_PAIR, clientPublicKey, "SDF", 300, stellar.Networks.TESTNET, "stellartomlorg.herokuapp.com");
+    // tx.sign(SERVER_KEY_PAIR);
+    // res.json ({ transaction: tx.toEnvelope().toXDR("base64"), network_passpharse: "Test SDF Network ; September 2015"});
+    // console.info(`${clientPublicKey} requested challenge => OK`);
+    const clientPublicKey = req.query.account;
+    const challenge = stellar.Utils.buildChallengeTx( SERVER_KEY_PAIR, clientPublicKey, "SDF", 300, stellar.Networks.TESTNET, "stellartomlorg.herokuapp.com");
     // challenge.sign(SERVER_KEY_PAIR);
-    // res.json ({ transaction: challenge, network_passpharse: stellar.Networks.TESTNET });
+    res.json ({ transaction: challenge, network_passpharse: stellar.Networks.TESTNET });
 })
 
-app.post('/sign',(req,res)=>{
-    const challenge = req.query.challenge;
-    const readChallengeTx = stellar.Utils.readChallengeTx(challenge, SERVER_KEY_PAIR.publicKey(), stellar.Networks.TESTNET, "SDF","stellartomlorg.herokuapp.com")
-    res.json({signedTransaction: readChallengeTx});
-})
 
 
 app.listen(port,()=>{
