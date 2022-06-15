@@ -22,6 +22,7 @@ const getSequence = async()=>{
     let getSequenceNumber = serverAccount.sequence;
     return getSequenceNumber;
 }
+const INVALID_SEQUENCE = "0"
 
 
 const CHALLENGE_EXPIRE_IN = 900
@@ -229,8 +230,7 @@ app.get('/auth',async(req, res) => {
         name: "challengeTx",
         value: randomNonce()
       });
-    console.log(await getSequence());
-    const account = new stellar.Account(SERVER_KEY_PAIR.publicKey(), await getSequence());
+    const account = new stellar.Account(SERVER_KEY_PAIR.publicKey(), INVALID_SEQUENCE);
     const tx = new stellar.TransactionBuilder(account, { timebounds, fee:100}).addOperation(op).setNetworkPassphrase(stellar.Networks.TESTNET).build()
     tx.sign(SERVER_KEY_PAIR);
     res.json ({ transaction: tx.toEnvelope().toXDR("base64"), network_passpharse: stellar.Networks.TESTNET});
