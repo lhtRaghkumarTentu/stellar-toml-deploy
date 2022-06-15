@@ -16,10 +16,13 @@ app.use(cors());
 
 const server = new stellar.Server("https://horizon-testnet.stellar.org")
 const SERVER_KEY_PAIR = stellar.Keypair.fromSecret("SA6JUAPMIEOXKFE7VSNTOGB4TFDXRMVCBE6DWZNTW7JWKLMMRJY2ZZMC");
+// console.log(SERVER_KEY_PAIR.publicKey());
 const getSequence = async()=>{
     let serverAccount = await server.loadAccount(SERVER_KEY_PAIR.publicKey())
-    return serverAccount.sequence;
+    let getSequenceNumber = serverAccount.sequence;
+    return getSequenceNumber;
 }
+
 
 const CHALLENGE_EXPIRE_IN = 900
 const randomNonce = () => {
@@ -217,25 +220,24 @@ app.get('/auth',async(req, res) => {
     const clientPublicKey = req.query.account;
     const minTime = Date.now();
     const maxTime = minTime + CHALLENGE_EXPIRE_IN;
-    const timebounds = {
-      minTime: minTime.toString(),
-      maxTime: maxTime.toString()
-    };
+    // const timebounds = {
+    //   minTime: minTime.toString(),
+    //   maxTime: maxTime.toString()
+    // };
     const op = stellar.Operation.manageData({
         source: clientPublicKey,
         name: "challengeTx",
         value: randomNonce()
       });
-    console.log(await getSequence());
+    // console.log(await getSequence());
     const account = new stellar.Account(SERVER_KEY_PAIR.publicKey(), await getSequence());
-    const tx = new stellar.TransactionBuilder(account, { timebounds, fee:100}).addOperation(op).setNetworkPassphrase(stellar.Networks.TESTNET).build()
-    // console.log(tx)
-    // readChallengeTx = stellar.Utils.readChallengeTx(tx.toEnvelope().toXDR("base64"), SERVER_KEY_PAIR.publicKey(), stellar.Networks.TESTNET, "SDF","stellartomlorg.herokuapp.com")
-    // console.log(readChallengeTx);
+    // console.log(account);
+    const tx = new stellar.TransactionBuilder(account, { fee:100}).addOperation(op).setNetworkPassphrase(stellar.Networks.TESTNET).build()
+    // console.log(tx);
     tx.sign(SERVER_KEY_PAIR);
     res.json ({ transaction: tx.toEnvelope().toXDR("base64"), network_passpharse: stellar.Networks.TESTNET});
-    // console.info(`${clientPublicKey} requested challenge => OK`);
 
+    // console.info(`${clientPublicKey} requested challenge => OK`);
     // const clientPublicKey = req.query.account;
     // const challenge = stellar.Utils.buildChallengeTx( SERVER_KEY_PAIR, clientPublicKey, "SDF", 300, stellar.Networks.TESTNET, "stellartomlorg.herokuapp.com");
     // challenge.sign(SERVER_KEY_PAIR);
