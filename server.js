@@ -220,28 +220,20 @@ app.get('/auth',async(req, res) => {
     const clientPublicKey = req.query.account;
     const minTime = Date.now();
     const maxTime = minTime + CHALLENGE_EXPIRE_IN;
-    // const timebounds = {
-    //   minTime: minTime.toString(),
-    //   maxTime: maxTime.toString()
-    // };
+    const timebounds = {
+      minTime: minTime.toString(),
+      maxTime: maxTime.toString()
+    };
     const op = stellar.Operation.manageData({
         source: clientPublicKey,
         name: "challengeTx",
         value: randomNonce()
       });
-    // console.log(await getSequence());
+    console.log(await getSequence());
     const account = new stellar.Account(SERVER_KEY_PAIR.publicKey(), await getSequence());
-    // console.log(account);
-    const tx = new stellar.TransactionBuilder(account, { fee:100}).addOperation(op).setNetworkPassphrase(stellar.Networks.TESTNET).build()
-    // console.log(tx);
+    const tx = new stellar.TransactionBuilder(account, { timebounds, fee:100}).addOperation(op).setNetworkPassphrase(stellar.Networks.TESTNET).build()
     tx.sign(SERVER_KEY_PAIR);
     res.json ({ transaction: tx.toEnvelope().toXDR("base64"), network_passpharse: stellar.Networks.TESTNET});
-
-    // console.info(`${clientPublicKey} requested challenge => OK`);
-    // const clientPublicKey = req.query.account;
-    // const challenge = stellar.Utils.buildChallengeTx( SERVER_KEY_PAIR, clientPublicKey, "SDF", 300, stellar.Networks.TESTNET, "stellartomlorg.herokuapp.com");
-    // challenge.sign(SERVER_KEY_PAIR);
-    // res.json ({ transaction: challenge, network_passpharse: stellar.Networks.TESTNET });
 })
 
 
