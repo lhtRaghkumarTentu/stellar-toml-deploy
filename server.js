@@ -218,22 +218,25 @@ app.get('/sep6/info',(req,res)=>{
 
 //SEP10
 app.get('/auth',async(req, res) => {
+    // const clientPublicKey = req.query.account;
+    // const minTime = Date.now();
+    // const maxTime = minTime + CHALLENGE_EXPIRE_IN;
+    // const timebounds = {
+    //   minTime: minTime.toString(),
+    //   maxTime: maxTime.toString()
+    // };
+    // const op = stellar.Operation.manageData({
+    //     source: clientPublicKey,
+    //     name: "challengeTx",
+    //     value: randomNonce()
+    //   });
+    // const account = new stellar.Account(SERVER_KEY_PAIR.publicKey(), INVALID_SEQUENCE);
+    // const tx = new stellar.TransactionBuilder(account, { timebounds, fee:100}).addOperation(op).setNetworkPassphrase(stellar.Networks.TESTNET).build()
+    // tx.sign(SERVER_KEY_PAIR);
+    // res.json ({ transaction: tx.toEnvelope().toXDR("base64"), network_passpharse: stellar.Networks.TESTNET});
     const clientPublicKey = req.query.account;
-    const minTime = Date.now();
-    const maxTime = minTime + CHALLENGE_EXPIRE_IN;
-    const timebounds = {
-      minTime: minTime.toString(),
-      maxTime: maxTime.toString()
-    };
-    const op = stellar.Operation.manageData({
-        source: clientPublicKey,
-        name: "challengeTx",
-        value: randomNonce()
-      });
-    const account = new stellar.Account(SERVER_KEY_PAIR.publicKey(), INVALID_SEQUENCE);
-    const tx = new stellar.TransactionBuilder(account, { timebounds, fee:100}).addOperation(op).setNetworkPassphrase(stellar.Networks.TESTNET).build()
-    tx.sign(SERVER_KEY_PAIR);
-    res.json ({ transaction: tx.toEnvelope().toXDR("base64"), network_passpharse: stellar.Networks.TESTNET});
+    const challenge = stellar.Utils.buildChallengeTx( SERVER_KEY_PAIR, clientPublicKey, "SDF", 300, stellar.Networks.TESTNET, "stellartomlorg.herokuapp.com");
+    res.json ({ transaction: challenge, network_passpharse: stellar.Networks.TESTNET });
 })
 
 
