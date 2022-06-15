@@ -25,7 +25,7 @@ const getSequence = async()=>{
 const INVALID_SEQUENCE = "-1"
 
 
-const CHALLENGE_EXPIRE_IN = 900
+const CHALLENGE_EXPIRE_IN = 10000
 const randomNonce = () => {
     return crypto.randomBytes(32).toString("hex");
 };
@@ -221,17 +221,17 @@ app.get('/auth',async(req, res) => {
     const clientPublicKey = req.query.account;
     const minTime = Date.now();
     const maxTime = minTime + CHALLENGE_EXPIRE_IN;
-    // const timebounds = {
-    //   minTime: minTime.toString(),
-    //   maxTime: maxTime.toString()
-    // };
+    const timebounds = {
+      minTime: minTime.toString(),
+      maxTime: maxTime.toString()
+    };
     const op = stellar.Operation.manageData({
         source: clientPublicKey,
         name: "challengeTx",
         value: randomNonce()
-      });   
+      });
     const account = new stellar.Account(SERVER_KEY_PAIR.publicKey(), INVALID_SEQUENCE);
-    const tx = new stellar.TransactionBuilder(account, { fee:100}).addOperation(op).setNetworkPassphrase(stellar.Networks.TESTNET).build()
+    const tx = new stellar.TransactionBuilder(account, { timebounds, fee:100}).addOperation(op).setNetworkPassphrase(stellar.Networks.TESTNET).build()
     tx.sign(SERVER_KEY_PAIR);
     res.json ({ transaction: tx.toEnvelope().toXDR("base64"), network_passpharse: stellar.Networks.TESTNET});
     // const clientPublicKey = req.query.account;
