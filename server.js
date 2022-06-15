@@ -231,7 +231,7 @@ app.get('/auth',async(req, res) => {
         value: randomNonce()
       });
     const account = new stellar.Account(SERVER_KEY_PAIR.publicKey(), INVALID_SEQUENCE);
-    const tx = new stellar.TransactionBuilder(account, { timebounds, fee:100}).addOperation(op).setNetworkPassphrase(stellar.Networks.TESTNET).build()
+    const tx = new stellar.TransactionBuilder(account, { fee:100 }).addOperation(op).setNetworkPassphrase(stellar.Networks.TESTNET).setTimebounds(timebounds).build()
     tx.sign(SERVER_KEY_PAIR);
     res.json ({ transaction: tx.toEnvelope().toXDR("base64"), network_passpharse: stellar.Networks.TESTNET});
     // const clientPublicKey = req.query.account;
