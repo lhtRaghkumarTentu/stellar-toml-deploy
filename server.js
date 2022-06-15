@@ -25,7 +25,7 @@ const getSequence = async()=>{
 const INVALID_SEQUENCE = "-1"
 
 
-const CHALLENGE_EXPIRE_IN = 10000
+const CHALLENGE_EXPIRE_IN = 300
 const randomNonce = () => {
     return crypto.randomBytes(32).toString("hex");
 };
