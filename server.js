@@ -5,7 +5,6 @@ const path = require('path');
 const cors = require('cors');
 const crypto = require('crypto');
 const stellar = require('stellar-sdk');
-const validateTimeBounds = require("./stellar");
 // const {validateTimeBounds} = require('stellar-sdk');
 // const jwt = require("jsonwebtoken");
 // const { Transaction } = require('stellar-sdk');
