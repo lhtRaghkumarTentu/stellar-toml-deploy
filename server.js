@@ -244,14 +244,14 @@ app.get('/auth',async(req, res) => {
 })
 
 app.post('/sign',(req,res)=>{
-    const tx = new stellar.Transaction(req.query.transaction,stellar.Networks.TESTNET);
+    const tx = new stellar.Transaction(req.query.transaction,req.query.network_passphrase);
     tx.sign(SERVER_KEY_PAIR);
     res.json ({ transaction: tx.toEnvelope().toXDR("base64"), network_passphrase: stellar.Networks.TESTNET});
 })
 
 app.post('/auth',(req,res)=>{
-    const tx = new stellar.Transaction(req.query.transaction,req.query.network_passphrase);
-    tx.sign(SERVER_KEY_PAIR)
+    const tx = new stellar.Transaction(req.query.transaction,stellar.Networks.TESTNET);
+    tx.sign(SERVER_KEY_PAIR);
     let op = tx.operations[0];
     op.source = tx.source;
     console.log(tx.signatures);
