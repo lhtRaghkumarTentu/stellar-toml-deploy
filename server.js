@@ -28,7 +28,7 @@ const getSequence = async()=>{
     let getSequenceNumber = serverAccount.sequence;
     return getSequenceNumber;
 }
-const INVALID_SEQUENCE = "0"
+const INVALID_SEQUENCE = "-1"
 
 
 const CHALLENGE_EXPIRE_IN = 300
