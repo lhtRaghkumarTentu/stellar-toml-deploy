@@ -234,7 +234,7 @@ app.get('/auth',async(req, res) => {
     };
     const op = stellar.Operation.manageData({
         source: clientPublicKey,
-        name: "stellartomlorg.herokuapp.com auth",
+        name: "client_domain",
         value: randomNonce()
       });
     const account = new stellar.Account(SERVER_KEY_PAIR.publicKey(), INVALID_SEQUENCE);
