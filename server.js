@@ -21,7 +21,7 @@ const SERVER_KEY_PAIR = stellar.Keypair.fromSecret("SA6JUAPMIEOXKFE7VSNTOGB4TFDX
 const ENDPOINT = 'stellartomlorg.herokuapp.com'
 const JWT_TOKEN_LIFETIME = 86400;
 const JWT_SECRET = "hariharaveeramallu"
-// ALLOWED_ACCOUNTS
+const ALLOWED_ACCOUNTS = ["GCQ45Q2PK773DVNYX7NIXBNUGAPEJCST4KXXJH3FBEZ7YAY3TVUAQQWD","GAFF6BP6J4RQ3RTVOPDQVUHHYUVCJ3WRKOVZEMYYNTJVF3L33PE4EIEM","GBXDPJLCUZ6V43CYTMY3YJCXJERPNDINDY6OAIHWW2EHEP6FMMFYF67C"]
 // console.log(SERVER_KEY_PAIR.publicKey());
 const getSequence = async()=>{
     let serverAccount = await server.loadAccount(SERVER_KEY_PAIR.publicKey())
@@ -243,10 +243,16 @@ app.get('/auth',async(req, res) => {
     res.json ({ transaction: tx.toEnvelope().toXDR("base64"), network_passphrase: stellar.Networks.TESTNET});
 })
 
+app.post('/sign',(req,res)=>{
+    const tx = new stellar.Transaction(req.query.transaction,stellar.Networks.TESTNET);
+    tx.sign(SERVER_KEY_PAIR);
+    res.json ({ transaction: tx.toEnvelope().toXDR("base64"), network_passphrase: stellar.Networks.TESTNET});
+})
+
 app.post('/auth',(req,res)=>{
     const tx = new stellar.Transaction(req.query.transaction,stellar.Networks.TESTNET);
     tx.sign(SERVER_KEY_PAIR);
-    console.log(tx);
+    // console.log(tx);
     let op = tx.operations[0];
     op.source = tx.source;
     console.log(tx.signatures);
@@ -300,14 +306,14 @@ app.post('/auth',(req,res)=>{
     }
   
     // Check that an access from this account is allowed
-    // if (ALLOWED_ACCOUNTS.indexOf(op.source) == -1) {
-    //     console.info(
-    //     `${op.source} requested token => access denied, check ALLOWED_ACCOUNTS`
-    //     );
-    //     return res.json({ error: `${op.source} access denied.` });
-    // }
+    if (ALLOWED_ACCOUNTS.indexOf(op.source) == -1) {
+        console.info(
+        `${op.source} requested token => access denied, check ALLOWED_ACCOUNTS`
+        );
+        return res.json({ error: `${op.source} access denied.` });
+    }
   
-    // console.info(`${op.source} requested token => OK`);
+    console.info(`${op.source} requested token => OK`);
   
     const token = jwt.sign(
         {
