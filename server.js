@@ -243,7 +243,7 @@ app.get('/auth',async(req, res) => {
     res.json ({ transaction: tx.toEnvelope().toXDR("base64"), network_passphrase: stellar.Networks.TESTNET});
 })
 
-app.post('/post/auth',(req,res)=>{
+app.post('/auth',(req,res)=>{
     const tx = new stellar.Transaction(req.query.transaction,stellar.Networks.TESTNET);
     tx.sign(SERVER_KEY_PAIR);
     console.log(tx);
