@@ -239,7 +239,7 @@ app.get('/auth',async(req, res) => {
       });
     const account = new stellar.Account(SERVER_KEY_PAIR.publicKey(), INVALID_SEQUENCE);
     const tx = new stellar.TransactionBuilder(account, { timebounds,fee:100}).addOperation(op).setNetworkPassphrase(stellar.Networks.TESTNET).build()
-    tx.sign(SERVER_KEY_PAIR);
+    // tx.sign(SERVER_KEY_PAIR);
     res.json ({ transaction: tx.toEnvelope().toXDR("base64"), network_passphrase: stellar.Networks.TESTNET});
 })
 
