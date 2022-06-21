@@ -4,13 +4,14 @@ const express = require('express');
 const crypto = require('crypto');
 const path = require('path');
 const cors = require('cors');
+require('dotenv').config();
 const app = express();
 app.use(cors());
 
-const ALLOWED_ACCOUNTS = ["GCQ45Q2PK773DVNYX7NIXBNUGAPEJCST4KXXJH3FBEZ7YAY3TVUAQQWD","GAFF6BP6J4RQ3RTVOPDQVUHHYUVCJ3WRKOVZEMYYNTJVF3L33PE4EIEM","GBXDPJLCUZ6V43CYTMY3YJCXJERPNDINDY6OAIHWW2EHEP6FMMFYF67C"]
-const SERVER_KEY_PAIR = stellar.Keypair.fromSecret("SA6JUAPMIEOXKFE7VSNTOGB4TFDXRMVCBE6DWZNTW7JWKLMMRJY2ZZMC");
-const ENDPOINT = 'stellartomlorg.herokuapp.com'
-const JWT_SECRET = "hariharaveeramallu"
+const ALLOWED_ACCOUNTS = process.env.ALLOWED_ACCOUNTS;
+const SERVER_KEY_PAIR = stellar.Keypair.fromSecret(process.env.SERVER_SECRET_KEY);
+const ENDPOINT = process.env.ENDPOINT
+const JWT_SECRET = process.env.JWT_SECRET
 const JWT_TOKEN_LIFETIME = 86400;
 const CHALLENGE_EXPIRE_IN = 300
 const INVALID_SEQUENCE = "-1"
@@ -343,7 +344,7 @@ app.get('/sep24/info',(req,res)=>{
 /**
  * Starting Server
  */
-const port = process.env.PORT || 4000;
+const port = process.env.PORT;
 app.listen(port,()=>{
     console.log(`App is Running Locally on Port http://localhost:${port}`)
 })                                   
