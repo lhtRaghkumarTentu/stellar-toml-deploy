@@ -22,32 +22,24 @@ const ENDPOINT = 'stellartomlorg.herokuapp.com'
 const JWT_TOKEN_LIFETIME = 86400;
 const JWT_SECRET = "hariharaveeramallu"
 const ALLOWED_ACCOUNTS = ["GCQ45Q2PK773DVNYX7NIXBNUGAPEJCST4KXXJH3FBEZ7YAY3TVUAQQWD","GAFF6BP6J4RQ3RTVOPDQVUHHYUVCJ3WRKOVZEMYYNTJVF3L33PE4EIEM","GBXDPJLCUZ6V43CYTMY3YJCXJERPNDINDY6OAIHWW2EHEP6FMMFYF67C"]
-// console.log(SERVER_KEY_PAIR.publicKey());
-const getSequence = async()=>{
-    let serverAccount = await server.loadAccount(SERVER_KEY_PAIR.publicKey())
-    let getSequenceNumber = serverAccount.sequence;
-    return getSequenceNumber;
-}
+
 const INVALID_SEQUENCE = "-1"
-
-
 const CHALLENGE_EXPIRE_IN = 300
+
 const randomNonce = () => {
     return crypto.randomBytes(32).toString("hex");
 };
 
-//SEP01
+
 app.get('/.well-known/stellar.toml', (req, res, next) => {
-    const options = {
-      root: path.join(__dirname, 'public'),
-    }
+    const options = { root: path.join(__dirname, 'public') }
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header("content-type", "text/plain");
     res.sendFile('stellar.toml', options);
 })
 
-//SEP24
+
 app.get('/sep24/info',(req,res)=>{
 res.json({
     "deposit": {
@@ -80,7 +72,7 @@ res.json({
 })
 })
 
-//SEP06
+
 app.get('/sep6/info',(req,res)=>{
     res.json({
         "deposit": {
@@ -222,7 +214,7 @@ app.get('/sep6/info',(req,res)=>{
     })
 })
 
-//SEP10
+
 app.get('/auth',async(req, res) => {
     const clientPublicKey = req.query.account;
     const minTime = Math.floor(Date.now() / 1000);
