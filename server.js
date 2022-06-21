@@ -1,36 +1,31 @@
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 4000;
-const path = require('path');
-const cors = require('cors');
-const crypto = require('crypto');
 const stellar = require('stellar-sdk');
 const jwt = require("jsonwebtoken");
-// const {validateTimeBounds} = require('stellar-sdk');
-// const jwt = require("jsonwebtoken");
-// const { Transaction } = require('stellar-sdk');
+const express = require('express');
+const crypto = require('crypto');
+const path = require('path');
+const cors = require('cors');
+const app = express();
 
-app.get("/",(req,res)=>{
-    res.send("Hello is This Working!!!!!!!!!!!!")
-});
-
-app.use(cors());
-
-const server = new stellar.Server("https://horizon-testnet.stellar.org")
 const SERVER_KEY_PAIR = stellar.Keypair.fromSecret("SA6JUAPMIEOXKFE7VSNTOGB4TFDXRMVCBE6DWZNTW7JWKLMMRJY2ZZMC");
-const ENDPOINT = 'stellartomlorg.herokuapp.com'
-const JWT_TOKEN_LIFETIME = 86400;
-const JWT_SECRET = "hariharaveeramallu"
-const ALLOWED_ACCOUNTS = ["GCQ45Q2PK773DVNYX7NIXBNUGAPEJCST4KXXJH3FBEZ7YAY3TVUAQQWD","GAFF6BP6J4RQ3RTVOPDQVUHHYUVCJ3WRKOVZEMYYNTJVF3L33PE4EIEM","GBXDPJLCUZ6V43CYTMY3YJCXJERPNDINDY6OAIHWW2EHEP6FMMFYF67C"]
-
-const INVALID_SEQUENCE = "-1"
-const CHALLENGE_EXPIRE_IN = 300
+const CHALLENGE_EXPIRE_IN = 900;
+const INVALID_SEQUENCE = "-1";
+app.use(cors());
 
 const randomNonce = () => {
     return crypto.randomBytes(32).toString("hex");
 };
 
+/**
+ * Anchor Status Check End Point
+ */
+app.get("/", (req, res) => {
+  res.json({ status: "Anchor woking!!!!!" });
+});
 
+
+/**
+ * -----------SEP1 Implimentation Start---------------//
+ */
 app.get('/.well-known/stellar.toml', (req, res, next) => {
     const options = { root: path.join(__dirname, 'public') }
     res.header("Access-Control-Allow-Origin", "*");
@@ -38,184 +33,18 @@ app.get('/.well-known/stellar.toml', (req, res, next) => {
     res.header("content-type", "text/plain");
     res.sendFile('stellar.toml', options);
 })
+//-----------SEP1 Implimentation End------------------//
 
 
-app.get('/sep24/info',(req,res)=>{
-res.json({
-    "deposit": {
-        "AstroDollar": {
-            "enabled": true,
-            "fee_fixed": 1.0
-        },
-        "COINR": {
-            "enabled": true,
-            "fee_fixed": 1.0
-        }
-    },
-    "withdraw": {
-        "AstroDollar": {
-            "enabled": true,
-            "fee_fixed": 1.0
-        },
-        "COINR": {
-            "enabled": true,
-            "fee_fixed": 1.0
-        }
-    },
-    "fee": {
-        "enabled": true
-    },
-    "features": {
-        "account_creation": true,
-        "claimable_balances": true
-    }
-})
-})
-
-
-app.get('/sep6/info',(req,res)=>{
-    res.json({
-        "deposit": {
-            "AstroDollar": {
-                "enabled": true,
-                "authentication_required": true,
-                "fields": {
-                    "type": {
-                        "description": "'bank_account' is the only value supported'",
-                        "choices": [
-                            "bank_account"
-                        ]
-                    }
-                }
-            },
-            "COINR": {
-                "enabled": true,
-                "authentication_required": true,
-                "fields": {
-                    "type": {
-                        "description": "'bank_account' is the only value supported'",
-                        "choices": [
-                            "bank_account"
-                        ]
-                    }
-                }
-            }
-        },
-        "withdraw": {
-            "AstroDollar": {
-                "enabled": true,
-                "authentication_required": true,
-                "types": {
-                    "bank_account": {
-                        "fields": {
-                            "dest": {
-                                "description": "bank account number"
-                            },
-                            "dest_extra": {
-                                "description": "bank routing number"
-                            }
-                        }
-                    }
-                }
-            },
-            "COINR": {
-                "enabled": true,
-                "authentication_required": true,
-                "types": {
-                    "bank_account": {
-                        "fields": {
-                            "dest": {
-                                "description": "bank account number"
-                            },
-                            "dest_extra": {
-                                "description": "bank routing number"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "fee": {
-            "enabled": true,
-            "authentication_required": true
-        },
-        "transactions": {
-            "enabled": true,
-            "authentication_required": true
-        },
-        "transaction": {
-            "enabled": true,
-            "authentication_required": true
-        },
-        "features": {
-            "account_creation": true,
-            "claimable_balances": true
-        },
-        "deposit-exchange": {
-            "AstroDollar": {
-                "enabled": true,
-                "authentication_required": true,
-                "fields": {
-                    "type": {
-                        "description": "'bank_account' is the only value supported'",
-                        "choices": [
-                            "bank_account"
-                        ]
-                    }
-                }
-            },
-            "COINR": {
-                "enabled": true,
-                "authentication_required": true,
-                "fields": {
-                    "type": {
-                        "description": "'bank_account' is the only value supported'",
-                        "choices": [
-                            "bank_account"
-                        ]
-                    }
-                }
-            }
-        },
-        "withdraw-exchange": {
-            "AstroDollar": {
-                "enabled": true,
-                "authentication_required": true,
-                "types": {
-                    "bank_account": {
-                        "fields": {
-                            "dest": {
-                                "description": "bank account number"
-                            },
-                            "dest_extra": {
-                                "description": "bank routing number"
-                            }
-                        }
-                    }
-                }
-            },
-            "COINR": {
-                "enabled": true,
-                "authentication_required": true,
-                "types": {
-                    "bank_account": {
-                        "fields": {
-                            "dest": {
-                                "description": "bank account number"
-                            },
-                            "dest_extra": {
-                                "description": "bank routing number"
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    })
-})
-
-
-app.get('/auth',async(req, res) => {
+/**
+ * --------------SEP10 Implimentation Start-----------//
+ */
+//---------------GET /auth Endpoind------------------//
+/**
+ * @param ClientPublicKey {String}
+ * @Returns challengeTransaction Envelop
+ */
+ app.get('/auth',async(req, res) => {
     const clientPublicKey = req.query.account;
     const minTime = Math.floor(Date.now() / 1000);
     console.log(minTime);
@@ -235,13 +64,23 @@ app.get('/auth',async(req, res) => {
     res.json ({ transaction: tx.toEnvelope().toXDR("base64"), network_passphrase: stellar.Networks.TESTNET});
 })
 
-app.post('/sign',(req,res)=>{
+//---------------POST /sign Endpoind------------------//
+/**
+ * @param challengeTransaction {String}
+ * @Returns signedTransaction Envelop
+ */
+ app.post('/sign',(req,res)=>{
     const tx = new stellar.Transaction(req.query.transaction,stellar.Networks.TESTNET);
     tx.sign(SERVER_KEY_PAIR);
     res.json ({ transaction: tx.toEnvelope().toXDR("base64"), network_passphrase: stellar.Networks.TESTNET});
 })
 
-app.post('/auth',(req,res)=>{
+//---------------POST /auth Endpoind------------------//
+/**
+ * @param signedTransaction {String}
+ * @Returns jwt
+ */
+ app.post('/auth',(req,res)=>{
     const tx = new stellar.Transaction(req.query.transaction,stellar.Networks.TESTNET);
     tx.sign(SERVER_KEY_PAIR);
     let op = tx.operations[0];
@@ -319,8 +158,131 @@ app.post('/auth',(req,res)=>{
     
     res.json({ token: token });
   })
-  
 
-app.listen(port,()=>{
-    console.log(`App is Running Locally on Port http://localhost:${port}`)
+
+/**
+ * -----------SEP6 Implimentation Start----------------//
+ */
+//-----------------INFO EndPoint----------------------//
+app.get('/sep6/info',(req,res)=>{
+    res.json({
+        "deposit": {
+            "AstroDollar": {
+                "enabled": true,
+                "authentication_required": true,
+                "fields": {
+                    "type": {
+                        "description": "'bank_account' is the only value supported'",
+                        "choices": [
+                            "bank_account"
+                        ]
+                    }
+                }
+            }
+        },
+        "withdraw": {
+            "AstroDollar": {
+                "enabled": true,
+                "authentication_required": true,
+                "types": {
+                    "bank_account": {
+                        "fields": {
+                            "dest": {
+                                "description": "bank account number"
+                            },
+                            "dest_extra": {
+                                "description": "bank routing number"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "fee": {
+            "enabled": true,
+            "authentication_required": true
+        },
+        "transactions": {
+            "enabled": true,
+            "authentication_required": true
+        },
+        "transaction": {
+            "enabled": true,
+            "authentication_required": true
+        },
+        "features": {
+            "account_creation": true,
+            "claimable_balances": true
+        },
+        "deposit-exchange": {
+            "AstroDollar": {
+                "enabled": true,
+                "authentication_required": true,
+                "fields": {
+                    "type": {
+                        "description": "'bank_account' is the only value supported'",
+                        "choices": [
+                            "bank_account"
+                        ]
+                    }
+                }
+            }
+        },
+        "withdraw-exchange": {
+            "AstroDollar": {
+                "enabled": true,
+                "authentication_required": true,
+                "types": {
+                    "bank_account": {
+                        "fields": {
+                            "dest": {
+                                "description": "bank account number"
+                            },
+                            "dest_extra": {
+                                "description": "bank routing number"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    })
+})
+
+
+/**
+ * -----------SEP24 Implimentation Start--------------//
+ */
+//-----------------INFO EndPoint---------------------//
+app.get('/sep24/info',(req,res)=>{
+res.json({
+    "deposit": {
+        "AstroDollar": {
+            "enabled": true,
+            "fee_fixed": 1.0
+        }
+    },
+    "withdraw": {
+        "AstroDollar": {
+            "enabled": true,
+            "fee_fixed": 1.0
+        }
+    },
+    "fee": {
+        "enabled": true
+    },
+    "features": {
+        "account_creation": true,
+        "claimable_balances": true
+    }
+})
+})
+
+
+/**
+ * Starting Server
+ */
+const PORT = process.env.PORT || 8080;
+app.listen(PORT,()=>{   
+    console.log(`Server is Running Locally on http://localhost:${PORT}`)
 })                                   
