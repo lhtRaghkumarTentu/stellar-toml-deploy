@@ -1,7 +1,7 @@
 NETWORK_PASSPHRASE = "Test SDF Network ; September 2022"
-SIGNING_KEY = "GBXDPJLCUZ6V43CYTMY3YJCXJERPNDINDY6OAIHWW2EHEP6FMMFYF67C"
+SIGNING_KEY = "GARFFRPXMNJO4Q35GLXAJX4E3WYLNRXZFBHFOSVHIZDT7OJ2W2R4TZ2Y"
 HORIZON_URL = "https://horizon-testnet.stellar.org"
-ACCOUNTS = [ "GBRZDRPULVPWPZFVRJYK4OMKY22QHZOD5KEUEGUALM2KADZ3U54QK6G6", "GARMGTBWPPAFGIM5OAN5ZIMFDMLEZ2S7VJUTXT5W6YEQIY56Q4XSE7MG" ]
+ACCOUNTS = [ "GANJJURFTOQHX36OZRAGWZBGH5TXNAVCRKQSCMXH6VFU657MJ7NR7FE5", "GCQUOPVUV42T32GL22HBM3Z2TCOWUTHSECTBVFYKVXIRNN76DA33Z3PL" ]
 
 
 TRANSFER_SERVER = "https://stellartomlorg.herokuapp.com/sep6"
@@ -32,28 +32,9 @@ Keybase = " "
 
 
 [[CURRENCIES]]
-code = "AstroDollar"
+code = "LHTSD"
 image = " "
-issuer = "GBRZDRPULVPWPZFVRJYK4OMKY22QHZOD5KEUEGUALM2KADZ3U54QK6G6"
+issuer = "GANJJURFTOQHX36OZRAGWZBGH5TXNAVCRKQSCMXH6VFU657MJ7NR7FE5"
 is_asset_anchored = false
-anchor_asset_type = " "
-desc = "Stellar Reference Token (SRT) is an asset issued on testnet and is used as an anchored asset for this reference server for demonstration and testing purposes."
-
-
-[[CURRENCIES]]
-code = "COINR"
-image = " "
-issuer = "GAFF6BP6J4RQ3RTVOPDQVUHHYUVCJ3WRKOVZEMYYNTJVF3L33PE4EIEM"
-is_asset_anchored = false
-anchor_asset_type = " "
-desc = "COINR is an asset issued on testnet and is used as an anchored asset for this reference server for demonstration and testing purposes."
-
-
-[[CURRENCIES]]
-code = "ZeptaCoin"
-image = " "
-issuer = "GD3V4AJMAKA3D2TPSFQZQX2LM43WYNKFCEUQITWMYO3PL4V4CBLTGZFG"
-is_asset_anchored = false
-anchor_asset_type = " "
-desc = "ZeptaCoin is an asset issued on testnet and is used as an anchored asset for this reference server for demonstration and testing purposes."
-
+anchor_asset_type = "Digital"
+desc = "Leeway Hertz Technologies Stellar Dollar (LHTSD) is an asset issued on testnet and is used as an anchored asset for this reference server for demonstration and testing purposes."
