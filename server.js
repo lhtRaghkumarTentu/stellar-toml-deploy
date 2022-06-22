@@ -59,15 +59,15 @@ app.get('/.well-known/stellar.toml', (req, res, next) => {
       minTime: minTime.toString(),
       maxTime: maxTime.toString()
     };
-    const operation = stellar.Operation.manageData({
+    const op = stellar.Operation.manageData({
         source: clientPublicKey,
         name: "stellartomlorg.herokuapp.com auth",
         value: randomNonce()
       });
     const account = new stellar.Account(SERVER_KEY_PAIR.publicKey(), INVALID_SEQUENCE);
-    const transaction = new stellar.TransactionBuilder(account, { timebounds,fee:100}).addOperation(operation).setNetworkPassphrase(stellar.Networks.TESTNET).build()
-    transaction.sign(SERVER_KEY_PAIR);
-    res.json ({ transaction: transaction.toEnvelope().toXDR("base64"), network_passphrase: stellar.Networks.TESTNET});
+    const tx = new stellar.TransactionBuilder(account, { timebounds,fee:100}).addOperation(op).setNetworkPassphrase(stellar.Networks.TESTNET).build()
+    tx.sign(SERVER_KEY_PAIR);
+    res.json ({ transaction: tx.toEnvelope().toXDR("base64"), network_passphrase: stellar.Networks.TESTNET});
 })
 
 
