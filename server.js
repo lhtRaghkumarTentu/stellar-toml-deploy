@@ -66,7 +66,7 @@ app.get('/.well-known/stellar.toml', (req, res, next) => {
       });
     const account = new stellar.Account(SERVER_KEY_PAIR.publicKey(), INVALID_SEQUENCE);
     const transaction = new stellar.TransactionBuilder(account, { timebounds,fee:100}).addOperation(operation).setNetworkPassphrase(stellar.Networks.TESTNET).build()
-    // transaction.sign(SERVER_KEY_PAIR);
+    transaction.sign(SERVER_KEY_PAIR);
     res.json ({ transaction: transaction.toEnvelope().toXDR("base64"), network_passphrase: stellar.Networks.TESTNET});
 })
 
