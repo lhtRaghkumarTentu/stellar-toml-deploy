@@ -74,7 +74,7 @@ app.get('/.well-known/stellar.toml', (req, res, next) => {
         "stellartomlorg.herokuapp.com",
         "stellartomlorg.herokuapp.com",
       );
-    res.json ({ transaction: tx.toEnvelope().toXDR("base64"), network_passphrase: stellar.Networks.TESTNET});
+    res.json ({ transaction: tx });
 })
 
 
