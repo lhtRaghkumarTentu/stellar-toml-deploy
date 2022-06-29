@@ -10,6 +10,7 @@ app.use(cors());
 
 const ALLOWED_ACCOUNTS = process.env.ALLOWED_ACCOUNTS;
 const SERVER_KEY_PAIR = stellar.Keypair.fromSecret(process.env.SERVER_SECRET_KEY);
+console.log();
 const ENDPOINT = process.env.ENDPOINT
 const JWT_SECRET = process.env.JWT_SECRET
 const JWT_TOKEN_LIFETIME = 86400;
@@ -64,7 +65,7 @@ app.get('/.well-known/stellar.toml', (req, res, next) => {
         name: "stellartomlorg.herokuapp.com auth",
         value: randomNonce()
       });
-      console.log(operation);
+    //   console.log(operation);
     const account = new stellar.Account(SERVER_KEY_PAIR.publicKey(), INVALID_SEQUENCE);
     const transaction = new stellar.TransactionBuilder(account, { timebounds,fee:100}).addOperation(operation).setNetworkPassphrase(stellar.Networks.TESTNET).build()
     transaction.sign(SERVER_KEY_PAIR);
@@ -77,11 +78,20 @@ app.get('/.well-known/stellar.toml', (req, res, next) => {
  * @param challengeTransaction {String}
  * @Returns signedTransaction Envelop
  */
-app.post('/sign',(req,res)=>{
-    const tx = new stellar.Transaction(req.query.transaction,stellar.Networks.TESTNET);
-    tx.sign(SERVER_KEY_PAIR);
-    res.json ({ transaction: tx.toEnvelope().toXDR("base64"), network_passphrase: stellar.Networks.TESTNET});
-})
+// app.post("/sign", (req, res) => {
+//     const envelope_xdr = req.query.transaction;
+//     const network_passphrase = req.query.network_passphrase;
+//     const transaction = new stellar.Transaction(envelope_xdr, network_passphrase);
+//     if (Number.parseInt(transaction.sequence, 10) !== 0){
+//         res.status(400);
+//         res.send("transaction sequence value must be '0'");
+//         return;
+//     }
+//     transaction.sign(Keypair.fromSecret(SERVER_KEY_PAIR));
+//     res.set("Access-Control-Allow-Origin", "*");
+//     res.status(200);
+//     res.send({"transaction": transaction.toEnvelope().toXDR("base64"), "network_passphrase": network_passphrase});
+// });
 
 
 //---------------POST /auth Endpoind------------------//
@@ -146,6 +156,11 @@ app.post('/auth',(req,res)=>{
       );
     res.json({ token: token });
 })
+
+
+/**
+ * --------------SEP12 Implimentation Start-----------//
+ */
 
 
 /**
