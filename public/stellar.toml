@@ -6,7 +6,7 @@ ACCOUNTS = [ "GANJJURFTOQHX36OZRAGWZBGH5TXNAVCRKQSCMXH6VFU657MJ7NR7FE5", "GCQUOP
 
 TRANSFER_SERVER = "https://stellartomlorg.herokuapp.com/sep6"
 TRANSFER_SERVER_SEP0024 = "https://stellartomlorg.herokuapp.com/sep24"
-WEB_AUTH_ENDPOINT = "https:/testanchor.stellar.org/auth"
+WEB_AUTH_ENDPOINT = "https:/stellartomlorg.herokuapp.com/auth"
 KYC_SERVER = "https://stellartomlorg.herokuapp.com/kyc"
 DIRECT_PAYMENT_SERVER = "https://stellartomlorg.herokuapp.com/sep31"
 QUOTE_SERVER = "https://stellartomlorg.herokuapp.com/sep38"
