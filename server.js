@@ -168,7 +168,7 @@ app.get('/auth',async(req, res) => {
 
 app.get("/rct",async(req,res)=>{
     const authEndpoint = "https://stellartomlorg.herokuapp.com/auth";
-    const serverSigningKey = "GCXYQCZWWAJPZR7CJ5KN3QA2GQ5ROXUNZTIS6QHXEZCBIZZD5ZVNE6HD"
+    const serverSigningKey = "GARFFRPXMNJO4Q35GLXAJX4E3WYLNRXZFBHFOSVHIZDT7OJ2W2R4TZ2Y"
     const params = { account: req.query.publicKey, home_domain: req.query.homeDomain };
     const authURL = new URL(authEndpoint);
     Object.entries(params).forEach(([key, value]) => {
