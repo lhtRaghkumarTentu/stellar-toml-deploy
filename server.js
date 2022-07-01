@@ -2,11 +2,13 @@ const stellar = require('stellar-sdk');
 const jwt = require("jsonwebtoken");
 const express = require('express');
 const crypto = require('crypto');
+const axios = require('axios');
 const path = require('path');
 const cors = require('cors');
 require('dotenv').config();
 const app = express();
 app.use(cors());
+
 
 
 const SERVER_KEY_PAIR = stellar.Keypair.fromSecret(process.env.SERVER_SECRET_KEY);
@@ -161,6 +163,29 @@ app.get('/auth',async(req, res) => {
     transaction.sign(SERVER_KEY_PAIR);
     res.json ({ transaction: transaction.toEnvelope().toXDR("base64"), network_passphrase: transaction.networkPassphrase});
 });
+
+app.get("/rct",async(req,res)=>{
+    const authEndpoint = "https://stellartomlorg.herokuapp.com/auth";
+    const serverSigningKey = "GCXYQCZWWAJPZR7CJ5KN3QA2GQ5ROXUNZTIS6QHXEZCBIZZD5ZVNE6HD"
+    const params = { account: req.query.publicKey, home_domain: req.query.homeDomain };
+    const authURL = new URL(authEndpoint);
+    Object.entries(params).forEach(([key, value]) => {
+    authURL.searchParams.append(key, value);
+    });
+    const response = await axios.get(authURL.toString())
+    const resultJson = response.data
+    if (!resultJson.transaction) {
+        throw new Error("The response didn’t contain a transaction");
+      }
+      const { tx } = stellar.Utils.readChallengeTx(
+        resultJson.transaction,
+        serverSigningKey,
+        resultJson.network_passphrase,
+        req.query.homeDomain,
+        authURL.host,
+      );
+      res.json ({ transaction: tx.toEnvelope().toXDR("base64"), network_passphrase: tx.networkPassphrase});
+})
 
 
 //---------------POST /sign Endpoind------------------//

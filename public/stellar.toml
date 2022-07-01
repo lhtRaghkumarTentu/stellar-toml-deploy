@@ -1,7 +1,7 @@
 NETWORK_PASSPHRASE = "Test SDF Network ; September 2022"
-SIGNING_KEY = "GARFFRPXMNJO4Q35GLXAJX4E3WYLNRXZFBHFOSVHIZDT7OJ2W2R4TZ2Y"
+SIGNING_KEY = "GCXYQCZWWAJPZR7CJ5KN3QA2GQ5ROXUNZTIS6QHXEZCBIZZD5ZVNE6HD"
 HORIZON_URL = "https://horizon-testnet.stellar.org"
-ACCOUNTS = [ "GANJJURFTOQHX36OZRAGWZBGH5TXNAVCRKQSCMXH6VFU657MJ7NR7FE5", "GCQUOPVUV42T32GL22HBM3Z2TCOWUTHSECTBVFYKVXIRNN76DA33Z3PL" ]
+ACCOUNTS = [ "GBYOKRINWFRLWKOYJBI2GCPSWJWK6BP3IMWOSNI4VMLUFQJZYMQCEO76", "GBSYBDOFFLCUBBUVV3HGRQ5YCCMZZD3SYETNQBYHIIPMSVFAXJVBN6CK" ]
 
 
 TRANSFER_SERVER = "https://stellartomlorg.herokuapp.com/sep6"
@@ -38,3 +38,11 @@ issuer = "GANJJURFTOQHX36OZRAGWZBGH5TXNAVCRKQSCMXH6VFU657MJ7NR7FE5"
 is_asset_anchored = false
 anchor_asset_type = "Digital"
 desc = "Leeway Hertz Technologies Stellar Dollar (LHTSD) is an asset issued on testnet and is used as an anchored asset for this reference server for demonstration and testing purposes."
+
+[[CURRENCIES]]
+code = "LHTSE"
+image = " "
+issuer = "GBYOKRINWFRLWKOYJBI2GCPSWJWK6BP3IMWOSNI4VMLUFQJZYMQCEO76"
+is_asset_anchored = false
+anchor_asset_type = "Digital"
+desc = "Leeway Hertz Technologies Stellar Euro (LHTSE) is an asset issued on testnet and is used as an anchored asset for this reference server for demonstration and testing purposes."

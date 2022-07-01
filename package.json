@@ -12,12 +12,16 @@
   "license": "ISC",
   "dependencies": {
     "@satoshipay/stellar-sep-10": "^0.3.0",
+    "axios": "^0.27.2",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
+    "debug": "^4.3.4",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "fast-toml": "^0.5.4",
     "jsonwebtoken": "^8.5.1",
+    "node-fetch": "^3.2.6",
     "nodemon": "^2.0.16",
-    "stellar-sdk": "^10.1.2"
+    "stellar-sdk": "^10.1.0"
   }
 }
