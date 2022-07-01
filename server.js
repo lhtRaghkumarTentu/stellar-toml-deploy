@@ -161,12 +161,14 @@ app.get('/auth',async(req, res) => {
     const account = new stellar.Account(SERVER_KEY_PAIR.publicKey(), INVALID_SEQUENCE);
     const transaction = new stellar.TransactionBuilder(account, { timebounds,fee:100}).addOperation(operation).setNetworkPassphrase(stellar.Networks.TESTNET).build()
     transaction.sign(SERVER_KEY_PAIR);
+    console.log(transaction.source);
+    console.log(SERVER_KEY_PAIR.publicKey());
     res.json ({ transaction: transaction.toEnvelope().toXDR("base64"), network_passphrase: transaction.networkPassphrase});
 });
 
 app.get("/rct",async(req,res)=>{
     const authEndpoint = "https://stellartomlorg.herokuapp.com/auth";
-    const serverSigningKey = "GARFFRPXMNJO4Q35GLXAJX4E3WYLNRXZFBHFOSVHIZDT7OJ2W2R4TZ2Y"
+    const serverSigningKey = "GBSYBDOFFLCUBBUVV3HGRQ5YCCMZZD3SYETNQBYHIIPMSVFAXJVBN6CK"
     const params = { account: req.query.publicKey, home_domain: req.query.homeDomain };
     const authURL = new URL(authEndpoint);
     Object.entries(params).forEach(([key, value]) => {
