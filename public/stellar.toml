@@ -1,13 +1,13 @@
 NETWORK_PASSPHRASE = "Test SDF Network ; September 2022"
-SIGNING_KEY = "GCXYQCZWWAJPZR7CJ5KN3QA2GQ5ROXUNZTIS6QHXEZCBIZZD5ZVNE6HD"
+SIGNING_KEY = "GARFFRPXMNJO4Q35GLXAJX4E3WYLNRXZFBHFOSVHIZDT7OJ2W2R4TZ2Y"
 HORIZON_URL = "https://horizon-testnet.stellar.org"
-ACCOUNTS = [ "GBYOKRINWFRLWKOYJBI2GCPSWJWK6BP3IMWOSNI4VMLUFQJZYMQCEO76", "GBSYBDOFFLCUBBUVV3HGRQ5YCCMZZD3SYETNQBYHIIPMSVFAXJVBN6CK" ]
+ACCOUNTS = [ "GANJJURFTOQHX36OZRAGWZBGH5TXNAVCRKQSCMXH6VFU657MJ7NR7FE5", "GCQUOPVUV42T32GL22HBM3Z2TCOWUTHSECTBVFYKVXIRNN76DA33Z3PL" ]
 
 
 TRANSFER_SERVER = "https://stellartomlorg.herokuapp.com/sep6"
 TRANSFER_SERVER_SEP0024 = "https://stellartomlorg.herokuapp.com/sep24"
-WEB_AUTH_ENDPOINT = "https:/stellartomlorg.herokuapp.com/auth"
-KYC_SERVER = "https://testanchor.stellar.org/kyc"
+WEB_AUTH_ENDPOINT = "https://stellartomlorg.herokuapp.com/auth"
+KYC_SERVER = "https://stellartomlorg.herokuapp.com/kyc"
 DIRECT_PAYMENT_SERVER = "https://stellartomlorg.herokuapp.com/sep31"
 QUOTE_SERVER = "https://stellartomlorg.herokuapp.com/sep38"
 
@@ -38,11 +38,3 @@ issuer = "GANJJURFTOQHX36OZRAGWZBGH5TXNAVCRKQSCMXH6VFU657MJ7NR7FE5"
 is_asset_anchored = false
 anchor_asset_type = "Digital"
 desc = "Leeway Hertz Technologies Stellar Dollar (LHTSD) is an asset issued on testnet and is used as an anchored asset for this reference server for demonstration and testing purposes."
-
-[[CURRENCIES]]
-code = "LHTSE"
-image = " "
-issuer = "GBYOKRINWFRLWKOYJBI2GCPSWJWK6BP3IMWOSNI4VMLUFQJZYMQCEO76"
-is_asset_anchored = false
-anchor_asset_type = "Digital"
-desc = "Leeway Hertz Technologies Stellar Euro (LHTSE) is an asset issued on testnet and is used as an anchored asset for this reference server for demonstration and testing purposes."
