@@ -11,7 +11,7 @@ app.use(cors());
 
 
 
-const SERVER_KEY_PAIR = stellar.Keypair.fromSecret(process.env.SERVER_SECRET_KEY);
+const SERVER_KEY_PAIR = stellar.Keypair.fromSecret("SC4VJMB5ARWMJGPBETGEEAE7EIRSB3CH45O525GO7ZHHTBE6MBE3OF4Y");
 const ALLOWED_ACCOUNTS = process.env.ALLOWED_ACCOUNTS;
 const JWT_SECRET = process.env.JWT_SECRET
 const ENDPOINT = process.env.ENDPOINT
@@ -166,7 +166,7 @@ app.get('/auth',async(req, res) => {
 
 app.get("/rct",async(req,res)=>{
     const authEndpoint = "https://stellartomlorg.herokuapp.com/auth";
-    const serverSigningKey = "GARFFRPXMNJO4Q35GLXAJX4E3WYLNRXZFBHFOSVHIZDT7OJ2W2R4TZ2Y"
+    const serverSigningKey = "GCXYQCZWWAJPZR7CJ5KN3QA2GQ5ROXUNZTIS6QHXEZCBIZZD5ZVNE6HD"
     const params = { account: req.query.publicKey, home_domain: req.query.homeDomain };
     const authURL = new URL(authEndpoint);
     Object.entries(params).forEach(([key, value]) => {
